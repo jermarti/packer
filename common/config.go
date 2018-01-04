@@ -138,18 +138,20 @@ func DownloadableURL(original string) (string, error) {
 func FileExistsLocally(original string) (bool, error) {
 	fileURL, _ := url.Parse(original)
 	fileExists := false
-	err := nil
 
 	if fileURL.Scheme == "file" {
 		// Remove forward slash on absolute Windows file URLs before processing
-		if runtime.GOOS == "windows" && len(fileURL.Path) > 0 && fileURL.Path[0] == '/' {
-			filePath := fileURL.Path[1:]
+		filePath := fileURL.Path
+		if runtime.GOOS == "windows" && len(filePath) > 0 && filePath[0] == '/' {
+			filePath = filePath[1:]
 		}
-		if _, err := os.Stat(filePath); err != nil {
-			err = fmt.Errorf("source file needs to exist at time of config validation: %s", err)
+		_, err := os.Stat(filePath)
+		if err != nil {
+			err = fmt.Errorf("could not stat file %s", err)
+			return fileExists, err
 		} else {
 			fileExists = true
 		}
 	}
-	return fileExists, err
+	return fileExists, nil
 }
