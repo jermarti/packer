@@ -144,10 +144,11 @@ func FileExistsLocally(original string) (bool, error) {
 		filePath := fileURL.Path
 		if runtime.GOOS == "windows" && len(filePath) > 0 && filePath[0] == '/' {
 			filePath = filePath[1:]
+			fmt.Printf("debugging line -- shouldnt get here on windows")
 		}
 		_, err := os.Stat(filePath)
 		if err != nil {
-			err = fmt.Errorf("could not stat file %s", err)
+			err = fmt.Errorf("could not stat file: %s", err)
 			return fileExists, err
 		} else {
 			fileExists = true
