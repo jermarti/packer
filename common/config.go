@@ -145,6 +145,7 @@ func FileExistsLocally(original string) (bool, error) {
 		if runtime.GOOS == "windows" && len(filePath) > 0 && filePath[0] == '/' {
 			filePath = filePath[1:]
 			fmt.Printf("debugging line -- shouldnt get here on windows")
+			fmt.Printf("%#v", runtime.GOOS)
 		}
 		_, err := os.Stat(filePath)
 		if err != nil {
