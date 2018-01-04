@@ -137,7 +137,7 @@ func (b *Builder) Run(ui packer.Ui, hook packer.Hook, cache packer.Cache) (packe
 	var steps []multistep.Step
 
 	deploymentName := b.stateBag.Get(constants.ArmDeploymentName).(string)
-
+	
 	if b.config.OSType == constants.Target_Linux {
 		steps = []multistep.Step{
 			NewStepCreateResourceGroup(azureClient, ui),
@@ -154,7 +154,9 @@ func (b *Builder) Run(ui packer.Ui, hook packer.Hook, cache packer.Cache) (packe
 			NewStepPowerOffCompute(azureClient, ui),
 			NewStepCaptureImage(azureClient, ui),
 			NewStepDeleteResourceGroup(azureClient, ui),
-			NewStepDeleteOSDisk(azureClient, ui),
+		} 
+		if b.config.OSDiskSkipDelete == true {
+			steps = append(steps, NewStepDeleteOSDisk(azureClient, ui))
 		}
 	} else if b.config.OSType == constants.Target_Windows {
 		keyVaultDeploymentName := b.stateBag.Get(constants.ArmKeyVaultDeploymentName).(string)
@@ -184,7 +186,9 @@ func (b *Builder) Run(ui packer.Ui, hook packer.Hook, cache packer.Cache) (packe
 			NewStepPowerOffCompute(azureClient, ui),
 			NewStepCaptureImage(azureClient, ui),
 			NewStepDeleteResourceGroup(azureClient, ui),
-			NewStepDeleteOSDisk(azureClient, ui),
+		}
+		if b.config.OSDiskSkipDelete == true {
+			steps = append(steps, NewStepDeleteOSDisk(azureClient, ui))
 		}
 	} else {
 		return nil, fmt.Errorf("Builder does not support the os_type '%s'", b.config.OSType)

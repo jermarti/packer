@@ -191,6 +191,18 @@ func (s *TemplateBuilder) SetOSDiskSizeGB(diskSizeGB int32) error {
 	return nil
 }
 
+func (s *TemplateBuilder) SetOSDiskName(diskName string) error {
+	resource, err := s.getResourceByType(resourceVirtualMachine)
+	if err != nil {
+		return err
+	}
+
+	profile := resource.Properties.StorageProfile
+	profile.OsDisk.Name = to.StringPtr(diskName) 
+
+	return nil
+}
+
 func (s *TemplateBuilder) SetCustomData(customData string) error {
 	resource, err := s.getResourceByType(resourceVirtualMachine)
 	if err != nil {

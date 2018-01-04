@@ -107,10 +107,12 @@ type Config struct {
 	VirtualNetworkResourceGroupName   string `mapstructure:"virtual_network_resource_group_name"`
 	CustomDataFile                    string `mapstructure:"custom_data_file"`
 	customData                        string
-
+	 
 	// OS
 	OSType       string `mapstructure:"os_type"`
 	OSDiskSizeGB int32  `mapstructure:"os_disk_size_gb"`
+	OSDiskName   string `mapstructure:"os_disk_name"`
+	OSDiskSkipDelete bool `mapstructure:"os_disk_skip_delete"`
 
 	// Runtime Values
 	UserName               string
