@@ -155,7 +155,7 @@ func (b *Builder) Run(ui packer.Ui, hook packer.Hook, cache packer.Cache) (packe
 			NewStepCaptureImage(azureClient, ui),
 			NewStepDeleteResourceGroup(azureClient, ui),
 		} 
-		if b.config.OSDiskSkipDelete == true {
+		if b.config.OSDiskSkipDelete == false {
 			steps = append(steps, NewStepDeleteOSDisk(azureClient, ui))
 		}
 	} else if b.config.OSType == constants.Target_Windows {
@@ -187,7 +187,7 @@ func (b *Builder) Run(ui packer.Ui, hook packer.Hook, cache packer.Cache) (packe
 			NewStepCaptureImage(azureClient, ui),
 			NewStepDeleteResourceGroup(azureClient, ui),
 		}
-		if b.config.OSDiskSkipDelete == true {
+		if b.config.OSDiskSkipDelete == false {
 			steps = append(steps, NewStepDeleteOSDisk(azureClient, ui))
 		}
 	} else {
