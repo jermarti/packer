@@ -72,6 +72,10 @@ func GetVirtualMachineDeployment(config *Config) (*resources.Deployment, error) 
 		builder.SetOSDiskSizeGB(config.OSDiskSizeGB)
 	}
 
+	if config.OSDiskName != "" {
+		builder.SetOSDiskName(config.OSDiskName) 
+	}
+
 	if config.customData != "" {
 		builder.SetCustomData(config.customData)
 	}

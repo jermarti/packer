@@ -74,6 +74,7 @@ func TestBuildLinux02(t *testing.T) {
 	testSubject.BuildLinux("--test-ssh-authorized-key--")
 	testSubject.SetImageUrl("http://azure/custom.vhd", compute.Linux)
 	testSubject.SetOSDiskSizeGB(100)
+	testSubject.SetOSDiskName("--test-os-disk--")
 
 	err = testSubject.SetVirtualNetwork("--virtual-network-resource-group--", "--virtual-network--", "--subnet-name--")
 	if err != nil {
