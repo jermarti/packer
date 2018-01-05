@@ -29,7 +29,7 @@ func TestStepDeleteOSDiskShouldFailIfGetFails(t *testing.T) {
 	}
 }
 
-func TestStepDeleteOSDiskShouldPassIfGetPasses(t *testing.T) { 
+func TestStepDeleteOSDiskShouldPassIfGetPasses(t *testing.T) {
 	var testSubject = &StepDeleteOSDisk{
 		delete: func(string, string) error { return nil },
 		say:    func(message string) {},
